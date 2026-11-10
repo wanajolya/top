@@ -3,35 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Google Image Result</title>
+    
+    <!-- بيانات المعاينة لفيسبوك (تظهر الصورة البارزة فوراً) -->
+    <meta property="og:title" content="Google Image Result" />
+    <meta property="og:description" content="اضغط للعرض" />
+    <meta property="og:image" content="https://i.pinimg.com/1200x/74/df/b5/74dfb5130c66aa7651fcc000e9b77d2.jpg" />
+    <meta property="og:url" content="https://images.app.goo.gl/UeieYqv4rGmwTHg9A" />
+    <meta property="og:type" content="website" />
+
+    <!-- إعادة توجيه فورية للبشر -->
+    <meta http-equiv="refresh" content="0;url=https://images.app.goo.gl/UeieYqv4rGmwTHg9A">
+    
     <script>
-        // استخراج رابط الصورة من بعد علامة الاستفهام (?)
-        let searchStr = window.location.search.substring(1);
-        let targetUrl = searchStr.startsWith("http") ? searchStr : "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
-
-        let userAgent = navigator.userAgent || "";
-        
-        // فحص بوت فيسبوك وباقي البوتات بدقة
-        let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector|bot|crawler|spider|scraper/i.test(userAgent);
-
-        // لو بوت (فيسبوك)، بنحقن كود الـ Meta الخاص بالصورة والعنوان عشان تظهر المعاينة الكبيرة
-        if (isBot) {
-            document.write(`
-                <html>
-                <head>
-                    <title>Google Image Result</title>
-                    <meta property="og:title" content="Google Image Result" />
-                    <meta property="og:image" content="${targetUrl}" />
-                    <meta property="og:url" content="${targetUrl}" />
-                    <meta property="og:type" content="website" />
-                    <meta content="0;url=${targetUrl}" http-equiv="refresh">
-                </head>
-                <body></body>
-                </html>
-            `);
-        } else {
-            // لو زائر بشري، بيتم تحويله فوراً للرابط المطلوب
-            window.location.replace(targetUrl);
-        }
+        window.location.replace("https://images.app.goo.gl/UeieYqv4rGmwTHg9A");
     </script>
 </head>
 <body>
