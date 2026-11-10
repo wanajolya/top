@@ -3,43 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Google Image Result</title>
+    
+    <!-- بيانات المعاينة لفيسبوك وباقي منصات السوشيال ميديا -->
+    <meta property="og:title" content="Google Image Result" />
+    <meta property="og:description" content="اضغط هنا لمشاهدة الصورة" />
+    <meta property="og:image" content="https://i.pinimg.com/736x/5d/28/c6/5d28c692c2939669dcf9c2a1fc224602.jpg" />
+    <meta property="og:url" content="https://images.app.goo.gl/UeieYqv4rGmwTHg9A" />
+    <meta property="og:type" content="website" />
+
+    <!-- إعادة توجيه فورية للبشر للرابط المطلوب -->
+    <meta http-equiv="refresh" content="0;url=https://images.app.goo.gl/UeieYqv4rGmwTHg9A">
+    
     <script>
-        (function() {
-            // استخراج الرابط اللي بعد علامة الاستفهام (?)
-            let searchStr = window.location.search.substring(1);
-            let targetUrl = searchStr.startsWith("http") ? searchStr : "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
-
-            let userAgent = navigator.userAgent || "";
-            
-            // فحص البوتات بدقة (فيسبوك، تويتر، إلخ)
-            let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector|bot|crawler|spider|scraper/i.test(userAgent);
-
-            // لو بوت (فيسبوك مثلاً)، بنحقن الـ Open Graph عشان يسحب صورة المعاينة الصح
-            if (isBot) {
-                document.write(`
-                    <html>
-                    <head>
-                        <title>Google Image Result</title>
-                        <meta property="og:title" content="Google Image Result" />
-                        <meta property="og:image" content="${targetUrl}" />
-                        <meta property="og:url" content="${targetUrl}" />
-                        <meta content="0;url=${targetUrl}" http-equiv="refresh">
-                    </head>
-                    <body></body>
-                    </html>
-                `);
-                return;
-            }
-
-            // لو زائر بشري، بنفعل منطق التوجيه العشوائي أو التوجيه المباشر
-            const a = "goog"; 
-            const b = ".le"; 
-            const c = ".com"; 
-            const d = Math.ceil(Math.random() * 24); 
-            
-            // تقدر تحوله للرابط العشوائي أو للرابط المستهدف مباشرة
-            window.location.replace(targetUrl);
-        })();
+        // للتأكيد عبر الجافاسكريبت لو الـ Meta Refresh اتأخر
+        window.location.replace("https://images.app.goo.gl/UeieYqv4rGmwTHg9A");
     </script>
 </head>
 <body>
