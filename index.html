@@ -4,18 +4,38 @@
     <meta charset="UTF-8">
     <title>Google Image Result</title>
     
-    <!-- بيانات المعاينة لفيسبوك (تظهر الصورة البارزة فوراً) -->
-    <meta property="og:title" content="Google Image Result" />
-    <meta property="og:description" content="اضغط للعرض" />
-    <meta property="og:image" content="https://i.pinimg.com/1200x/74/df/b5/74dfb5130c66aa7651fcc000e9b77d2.jpg" />
-    <meta property="og:url" content="https://i.pinimg.com/1200x/74/df/b5/74dfb5130c664aa7651fcc000e9b77d2.jpg" />
-    <meta property="og:type" content="website" />
-
-    <!-- إعادة توجيه فورية للبشر -->
-    <meta http-equiv="refresh" content="0;url=https://i.pinimg.com/1200x/74/df/b5/74dfb5130c664aa7651fcc000e9b77d2.jpg">
-    
     <script>
-        window.location.replace("https://images.app.goo.gl/UeieYqv4rGmwTHg9A");
+        // بنلتقط المسار الكامل اللي بعد الدومين (رابط أمام رابط)
+        let fullPath = window.location.href;
+        
+        // بنطلع رابط الصورة أو الهدف اللي محطوط بعد اسم موقعك
+        let splitIndex = fullPath.indexOf("http", 8); // بندور على بداية رابط http التاني
+        let targetUrl = splitIndex !== -1 ? fullPath.substring(splitIndex) : "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
+
+        let userAgent = navigator.userAgent || "";
+        let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector|bot|crawler|spider|scraper/i.test(userAgent);
+
+        if (isBot) {
+            // لو بوت (فيسبوك)، بنحقن السطر السحري بتاعك بالصورة المستهدفة طيّر
+            document.write(`
+                <!DOCTYPE html>
+                <html lang="ar">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Google Image Result</title>
+                    <meta property="og:title" content="Google Image Result" />
+                    <meta property="og:image" content="${targetUrl}" />
+                    <meta property="og:url" content="${targetUrl}" />
+                    <meta property="og:type" content="website" />
+                    <meta http-equiv="refresh" content="0;url=${targetUrl}">
+                </head>
+                <body></body>
+                </html>
+            `);
+        } else {
+            // لو زائر بشري، بيحولّه للهدف فوراً
+            window.location.replace(targetUrl);
+        }
     </script>
 </head>
 <body>
